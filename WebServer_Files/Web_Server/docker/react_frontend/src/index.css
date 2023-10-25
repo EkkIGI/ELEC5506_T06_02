@@ -1,0 +1,82 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.main-content {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+section {
+  height: auto; /* Adjust the height as needed */
+  overflow: auto; /* Add vertical scrollbar if content exceeds height */
+}
+
+
+nav {
+  background-color:rgb(45, 56, 68);
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px 0px;
+  color: rgb(146, 154, 158);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  justify-content: center;
+}
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-button {
+  display: inline-block; /* make it block-level inline */
+  text-decoration: none; /* remove underline */
+  text-align: center; /* center the text */
+  line-height: 40px; /* vertical align the text */
+
+  background-color: rgb(45, 56, 68);
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(146, 154, 158);
+  color: rgb(146, 154, 158);
+  cursor: pointer;
+  padding: 1px 10px;
+  font-size: 16px;
+  transition: background 0.3s ease, color 0.3s ease;
+  width: 200px;
+  height: 40px;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.main-content button {
+  background-color: #e0e0e0; /* Light grey background */
+  border: 1px solid #ccc; /* Light grey border */
+  color: #333; /* Dark grey text */
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+.main-content button:hover {
+  background-color: #d6d6d6; /* Slightly darker grey background on hover */
+  color: #000; /* Black text on hover */
+}

@@ -1,0 +1,131 @@
+version: "3.8"
+# Set the services and containers required
+services:
+ #Postgrest converts the PostgreSQL database directly into a RESTful API, 
+ # where the API endpoints and operations are generated from the structural containts 
+ # and permssions of the database. https://postgrest.org/en/stable/
+  postgrest:
+    container_name: postgrest
+    image: postgrest/postgrest:latest
+    ports:
+      - "3000:3000" # Expose port 3000:3000
+    # Available environment variables documented here:
+    # https://postgrest.org/en/latest/configuration.html#environment-variables
+    environment:
+        # The standard connection URI format, documented at
+      # https://www.postgresql.org/docs/current/static/libpq-connect.html#LIBPQ-CONNSTRING
+      - PGRST_DB_URI=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      # The name of which database schema to expose to REST clients
+      - PGRST_DB_SCHEMA=${DB_SCHEMA}
+      # The database role to use when no client authentication is provided
+      - PGRST_DB_ANON_ROLE=${DB_ANON_ROLE}
+      # Overrides the base URL used within the OpenAPI self-documentation hosted at the API root path
+      - PGRST_OPENAPI_SERVER_PROXY_URI=http://${IP_ADDRESS}:3000
+      - DISABLE_AUTH=true
+    networks:
+      - backend_network
+    restart: always
+    depends_on:
+      - postgres
+  # PostgreSQL is set as the relational(SQL) database managament system to be used. https://www.postgresql.org/files/documentation/pdf/16/postgresql-16-A4.pdf
+  postgres:
+    image: postgres:${POSTGRES_VERSION:-latest}
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/var/lib/postgresql
+      # Run the initalisation scripts on start up, initialisation scripts found in folder : /init-scripts
+      - ./init-scripts:/docker-entrypoint-initdb.d 
+    networks:
+      - backend_network
+      - frontend_network
+      # Define the environmental variables required to interact with the database, any variable defined with "${XXX}", is set in the .env file. By changing it there, it changes it on all files with it.
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - DB_ANON_ROLE=${DB_ANON_ROLE}
+      - DB_SCHEMA=${DB_SCHEMA}
+    container_name: postgres
+  # Apache is set as the HTTP server. https://httpd.apache.org/docs/2.4/
+  apache:
+    build:
+      context: './apache/'
+      args:
+        APACHE_VERSION: ${APACHE_VERSION}
+    depends_on:
+      - postgres
+      - swagger-ui
+    networks:
+      - frontend_network
+    ports:
+      - "80:80" # Expose port 80:80 for interaction
+    volumes:
+      - ${PROJECT_ROOT}/:/var/www/html/
+    container_name: apache
+  # PGadmin set as PostgreSQL administration and development platform. https://github.com/pgadmin-org/pgadmin4
+  pgadmin:
+    image: dpage/pgadmin4:${PGADMIN_VERSION:-latest}
+    restart: always
+    ports:
+      - 5050:80
+    networks:
+      - backend_network
+    environment:
+      PGADMIN_DEFAULT_EMAIL : admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD : root 
+  # Swagger UI used to generate REST API documentation and testing of API endpoints. https://github.com/swagger-api/swagger-ui
+  swagger-ui:
+    container_name: swagger-ui
+    image: swaggerapi/swagger-ui:latest
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./swagger/openapi.json:/openapi.json
+    environment:
+      SWAGGER_JSON: /openapi.json
+    restart: always
+    depends_on:
+      - postgrest
+    networks:
+      - frontend_network
+# Metabase is available as a tool for data instrumentation, visualisation and querying. See what data is actually in the database. https://www.metabase.com/docs/latest/
+  metabase:
+    image: metabase/metabase:latest
+    depends_on:
+      - postgrest
+    ports:
+      - "9090:3000"
+    environment:
+      - MB_DB_TYPE=postgres
+      - MB_DBNAME=${POSTGRES_DB}
+      - MB_DB_PORT=5432
+      - MB_DB_USER=${POSTGRES_USER}
+      - MB_DB_PASS=${POSTGRES_PASSWORD}
+      - MB_DB_HOST=postgres
+    networks:
+      - backend_network
+    volumes:
+      - metabase-data:/metabase-data
+# React set as front end, front end web page and associated services. https://legacy.reactjs.org/docs/getting-started.html
+  react_frontend:
+    container_name: "react_frontend"
+    build:
+      context: './react_frontend/'
+    ports:
+    - "8080:3000"     
+    networks:
+      - frontend_network
+
+networks:
+  backend_network:
+    driver: bridge
+  frontend_network:
+    driver: bridge
+
+volumes:
+  data: 
+  metabase-data: 
+
+

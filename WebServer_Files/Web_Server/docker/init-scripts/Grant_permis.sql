@@ -1,0 +1,7 @@
+  GRANT INSERT, DELETE, SELECT, UPDATE ON TABLE logtable TO anon;
+  GRANT INSERT, DELETE, SELECT, UPDATE ON TABLE "usage" TO anon;
+  GRANT SELECT, INSERT, UPDATE ON TABLE users TO anon;
+  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE devices TO anon;
+  GRANT USAGE ON users_user_id_seq  TO anon;
+  GRANT USAGE, SELECT, UPDATE ON SEQUENCE usage_usage_log_id_seq TO anon;
+  

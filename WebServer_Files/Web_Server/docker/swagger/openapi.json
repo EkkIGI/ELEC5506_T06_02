@@ -1,0 +1,947 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "title": "ANFF Web Server API endpoints",
+    "version": "11.2.0"
+  },
+  "host": "192.168.56.1:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json",
+    "application/vnd.pgrst.object+json;nulls=stripped",
+    "application/vnd.pgrst.object+json",
+    "text/csv"
+  ],
+  "produces": [
+    "application/json",
+    "application/vnd.pgrst.object+json;nulls=stripped",
+    "application/vnd.pgrst.object+json",
+    "text/csv"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Introspection"
+        ],
+        "summary": "OpenAPI description (this document)",
+        "produces": [
+          "application/openapi+json",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/usage": {
+      "post": {
+        "tags": [
+          "usage"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.usage"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/logtable": {
+      "post": {
+        "tags": [
+          "logtable"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.logtable"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/devices": {
+      "post": {
+        "tags": [
+          "devices"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.devices"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/rpc/get_logs_with_device_type": {
+      "post": {
+        "tags": [
+          "(rpc) get_logs_with_device_type"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/authenticate_user_zigbee_rfid": {
+      "post": {
+        "tags": [
+          "(rpc) authenticate_user_zigbee_rfid"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "properties": {
+                "device_id": {
+                  "format": "integer",
+                  "type": "integer"
+                },
+                "rfid_hash": {
+                  "format": "character varying",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "rfid_hash",
+                "device_id"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/get_usage": {
+      "post": {
+        "tags": [
+          "(rpc) get_usage"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/delete_device": {
+      "post": {
+        "tags": [
+          "(rpc) delete_device"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "properties": {
+                "p_device_id": {
+                  "format": "integer",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "p_device_id"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/delete_log": {
+      "post": {
+        "tags": [
+          "(rpc) delete_log"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "properties": {
+                "p_log_id": {
+                  "format": "integer",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "p_log_id"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/delete_usage_log": {
+      "post": {
+        "tags": [
+          "(rpc) delete_usage_log"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "properties": {
+                "p_usage_log_id": {
+                  "format": "integer",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "p_usage_log_id"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/authenticate_user_zigbee_pw": {
+      "post": {
+        "tags": [
+          "(rpc) authenticate_user_zigbee_pw"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "properties": {
+                "device_id": {
+                  "format": "integer",
+                  "type": "integer"
+                },
+                "provided_password": {
+                  "format": "character varying",
+                  "type": "string"
+                },
+                "username": {
+                  "format": "character varying",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "provided_password",
+                "device_id"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/create_user": {
+      "post": {
+        "tags": [
+          "(rpc) create_user"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "properties": {
+                "access_level": {
+                  "format": "integer",
+                  "type": "integer"
+                },
+                "plaintext_password": {
+                  "format": "character varying",
+                  "type": "string"
+                },
+                "rfid_hash": {
+                  "format": "character varying",
+                  "type": "string"
+                },
+                "username": {
+                  "format": "character varying",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "plaintext_password",
+                "access_level",
+                "rfid_hash"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/get_devices": {
+      "post": {
+        "tags": [
+          "(rpc) get_devices"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/rpc/authenticate_user_online": {
+      "post": {
+        "tags": [
+          "(rpc) authenticate_user_online"
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "properties": {
+                "provided_password": {
+                  "format": "text",
+                  "type": "string"
+                },
+                "username": {
+                  "format": "text",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "provided_password"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "usage": {
+      "required": [
+        "usage_log_id",
+        "user_id",
+        "access_status",
+        "device_id"
+      ],
+      "properties": {
+        "usage_log_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "user_id": {
+          "description": "Note:\nThis is a Foreign Key to `users.user_id`.<fk table='users' column='user_id'/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "in_time": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "out_time": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "access_status": {
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "device_id": {
+          "format": "integer",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "logtable": {
+      "required": [
+        "log_id",
+        "device_id",
+        "log_data",
+        "time_submitted",
+        "dataframe",
+        "device_type"
+      ],
+      "properties": {
+        "log_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "device_id": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "log_data": {
+          "format": "json"
+        },
+        "time_submitted": {
+          "format": "timestamp without time zone",
+          "type": "string"
+        },
+        "dataframe": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "device_type": {
+          "format": "character varying",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "users": {
+      "required": [
+        "user_id",
+        "username",
+        "password_hash",
+        "access_status",
+        "access_level",
+        "salt"
+      ],
+      "properties": {
+        "user_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "username": {
+          "format": "character varying",
+          "maxLength": 255,
+          "type": "string"
+        },
+        "password_hash": {
+          "format": "character varying",
+          "maxLength": 255,
+          "type": "string"
+        },
+        "rfid_hash": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "access_status": {
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "access_level": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "salt": {
+          "format": "character varying",
+          "maxLength": 255,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "devices": {
+      "required": [
+        "device_id",
+        "mac_address",
+        "device_type"
+      ],
+      "properties": {
+        "device_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "integer",
+          "type": "integer"
+        },
+        "mac_address": {
+          "format": "character varying",
+          "type": "string"
+        },
+        "device_type": {
+          "format": "character varying",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "parameters": {
+    "preferParams": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": [
+        "params=single-object"
+      ],
+      "in": "header",
+      "type": "string"
+    },
+    "preferReturn": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": [
+        "return=representation",
+        "return=minimal",
+        "return=none"
+      ],
+      "in": "header",
+      "type": "string"
+    },
+    "preferCount": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": [
+        "count=none"
+      ],
+      "in": "header",
+      "type": "string"
+    },
+    "preferPost": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": [
+        "return=representation",
+        "return=minimal",
+        "return=none",
+        "resolution=ignore-duplicates",
+        "resolution=merge-duplicates"
+      ],
+      "in": "header",
+      "type": "string"
+    },
+    "select": {
+      "name": "select",
+      "description": "Filtering Columns",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "on_conflict": {
+      "name": "on_conflict",
+      "description": "On Conflict",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "order": {
+      "name": "order",
+      "description": "Ordering",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "range": {
+      "name": "Range",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "header",
+      "type": "string"
+    },
+    "rangeUnit": {
+      "name": "Range-Unit",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "default": "items",
+      "in": "header",
+      "type": "string"
+    },
+    "offset": {
+      "name": "offset",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "limit": {
+      "name": "limit",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.usage": {
+      "name": "usage",
+      "description": "usage",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/usage"
+      }
+    },
+    "rowFilter.usage.usage_log_id": {
+      "name": "usage_log_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.usage.user_id": {
+      "name": "user_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.usage.in_time": {
+      "name": "in_time",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.usage.out_time": {
+      "name": "out_time",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.usage.access_status": {
+      "name": "access_status",
+      "required": false,
+      "format": "boolean",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.usage.device_id": {
+      "name": "device_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "body.logtable": {
+      "name": "logtable",
+      "description": "logtable",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/logtable"
+      }
+    },
+    "rowFilter.logtable.log_id": {
+      "name": "log_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.logtable.device_id": {
+      "name": "device_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.logtable.log_data": {
+      "name": "log_data",
+      "required": false,
+      "format": "json",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.logtable.time_submitted": {
+      "name": "time_submitted",
+      "required": false,
+      "format": "timestamp without time zone",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.logtable.dataframe": {
+      "name": "dataframe",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.logtable.device_type": {
+      "name": "device_type",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "body.users": {
+      "name": "users",
+      "description": "users",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/users"
+      }
+    },
+    "rowFilter.users.user_id": {
+      "name": "user_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.username": {
+      "name": "username",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.password_hash": {
+      "name": "password_hash",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.rfid_hash": {
+      "name": "rfid_hash",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.access_status": {
+      "name": "access_status",
+      "required": false,
+      "format": "boolean",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.access_level": {
+      "name": "access_level",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.salt": {
+      "name": "salt",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "body.devices": {
+      "name": "devices",
+      "description": "devices",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/devices"
+      }
+    },
+    "rowFilter.devices.device_id": {
+      "name": "device_id",
+      "required": false,
+      "format": "integer",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.devices.mac_address": {
+      "name": "mac_address",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.devices.device_type": {
+      "name": "device_type",
+      "required": false,
+      "format": "character varying",
+      "in": "query",
+      "type": "string"
+    }
+  },
+  "externalDocs": {
+    "description": "PostgREST Documentation",
+    "url": "https://postgrest.org/en/v11.2/api.html"
+  }
+}
